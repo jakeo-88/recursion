@@ -1,9 +1,21 @@
 # break the array into individual segments
-def break_array(ary)
-  return true if ary.length == 1
-        
-  Array.new(ary[0, (ary.length/2) ] )
-  Array.new(ary[-(ary.length/2), (ary.length/2) ] )
+def break_array(ary, results = Array.new, final = [])
+  if ary.length == 1
+    final << ary
+    
+  else  
+    results.push(ary[0, (ary.length/2) ] )
+    results.push(ary[-(ary.length/2), (ary.length/2) ] )
+
+    ary = results
+
+    ary.each do |element|
+      if element.class == Array then
+        break_array(element, results = Array.new, final)
+      end
+    end
+    final
+  end
 end
 # sort the array
 
