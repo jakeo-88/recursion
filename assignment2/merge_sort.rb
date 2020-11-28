@@ -27,5 +27,19 @@ def rebuild_array(ary, n = 0, results = Array.new)
 end
 
 # sort in pairs of 2
+def sort_array(ary, n = 0, sorted_array = Array.new, compiled_array = Array.new)
+  return compiled_array if n > (ary.length - 1)
+  
+  if ary[n][0] < ary[n][1]
+      sorted_array << ary[n][0]
+      sorted_array << ary[n][1]
+  else 
+      sorted_array << ary[n][1]
+      sorted_array << ary[n][0]
+  end
+  compiled_array << sorted_array
+  
+  sort_array(ary, n + 1, sorted_array = Array.new, compiled_array)
 
+end
 # sort in pairs of multiples of 2 until the array is sorted
