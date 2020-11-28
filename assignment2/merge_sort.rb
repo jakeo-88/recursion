@@ -18,6 +18,13 @@ def break_array(ary, results = Array.new, final = [])
   end
 end
 # sort the array
+def rebuild_array(ary, n = 0, results = Array.new)
+  return results if n >= (ary.length - 1)
+  
+  new_array = ary[n] + ary[n + 1] 
+  results.push(new_array)
+  rebuild_array(ary, (n + 2), results)    
+end
 
 # sort in pairs of 2
 
