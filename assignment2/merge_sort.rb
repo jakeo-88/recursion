@@ -26,20 +26,68 @@ def rebuild_array(ary, n = 0, results = Array.new)
   rebuild_array(ary, (n + 2), results)    
 end
 
-# sort in pairs of 2
-def sort_array(ary, n = 0, sorted_array = Array.new, compiled_array = Array.new)
-  return compiled_array if n > (ary.length - 1)
+# sort in pairs of 2 elements until the array is sorted
+def sort_element(left_array, right_array, results = Array.new)
+  if left_array == []
+    return results << right_array[0] if right_array.length == 1
+      
+      
+      left_value = right_array[0]
+      right_value = right_array[1]
+      
+      if left_value < right_value 
+          results << right_value
+          right_array.delete_at(0)
   
-  if ary[n][0] < ary[n][1]
-      sorted_array << ary[n][0]
-      sorted_array << ary[n][1]
-  else 
-      sorted_array << ary[n][1]
-      sorted_array << ary[n][0]
+      else
+          results << right_value
+          right_array.delete_at(1)
+      end
+      
+  elsif right_array == []
+      return results << left_array[0] if left_array.length == 1
+      
+      left_value = left_array[0]
+      right_value = left_array[1]
+      
+      if left_value < right_value 
+          results << left_value
+          left_array.delete_at(0)
+  
+      else
+          results << right_value
+          left_array.delete_at(1)
+      end
+      
+      results
+      
+  else
+     
+      left_value = left_array[0]
+      right_value = right_array[0]
+  
+      if left_value < right_value 
+          results << left_value
+          left_array.delete_at(0)
+  
+      else
+          results << right_value
+          right_array.delete_at(0)
+      end
+      
+      results
   end
-  compiled_array << sorted_array
   
-  sort_array(ary, n + 1, sorted_array = Array.new, compiled_array)
-
+  results
+  sort_element(left_array, right_array, results)
 end
-# sort in pairs of multiples of 2 until the array is sorted
+
+def compile_array(ary, n = 0, final_array = Array.new)
+  # left and right side
+  return final_array if n > (ary.length - 1)
+  
+  final_array << sort_element(ary[n], ary[n + 1], results = Array.new)
+  
+   compile_array(ary, n + 2, final_array)
+end
+
