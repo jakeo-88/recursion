@@ -1,11 +1,12 @@
 # break the array into individual segments
 def break_array(ary, results = Array.new, final = [], org_ary = ary)
-  ary1 = ary[0, ary.length/2]
+  ary1 = ary[0, ((ary.length.to_f)/2).ceil]
   ary2 = ary[-(ary.length/2), (ary.length/2)] 
   results << ary1
   results << ary2
   repeat_break_array(results, broke_array = Array.new, org_ary, n = 0)
 end
+
 def repeat_break_array(ary, broke_array = Array.new, ref, n)
   return broke_array if broke_array.length >= ref.length
   
@@ -29,7 +30,6 @@ def repeat_break_array(ary, broke_array = Array.new, ref, n)
   repeat_break_array(ary, broke_array, ref, n)
 end
 
-
 # sort in pairs of 2 elements until the array is sorted
 def sort_element(left_array, right_array, results = Array.new)
   if left_array == []
@@ -48,7 +48,7 @@ def sort_element(left_array, right_array, results = Array.new)
       end
       
       results
-  elsif right_array == []
+  elsif ( (right_array == []) || (right_array.class == NilClass) )
       return results << left_array[0] if left_array.length == 1
       
       left_value = left_array[0]
