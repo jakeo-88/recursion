@@ -30,7 +30,7 @@ def repeat_break_array(ary, broke_array = Array.new, ref, n)
   repeat_break_array(ary, broke_array, ref, n)
 end
 
-# sort in pairs of 2 elements until the array is sorted
+# sort in pairs of 2 elements, and include exceptions for single elements
 def sort_element(left_array, right_array, results = Array.new)
   if left_array == []
     return results << right_array[0] if right_array.length == 1
@@ -85,6 +85,7 @@ def sort_element(left_array, right_array, results = Array.new)
   sort_element(left_array, right_array, results)
 end
 
+# repeat sorting process until all elements are sorted
 def compile_array(ary, n = 0, final_array = Array.new)
   # left and right side
   return final_array if n > (ary.length - 1)
@@ -94,6 +95,7 @@ def compile_array(ary, n = 0, final_array = Array.new)
    compile_array(ary, n + 2, final_array)
 end
 
+# repeat the sorting process until array has all the elements sorted
 def multi_array(ary, counter = 0, original_array)
   return ary if counter >= Math.log(original_array.length, 2).to_f.ceil
   ary = compile_array(ary, n = 0, final_array = Array.new)
@@ -102,6 +104,7 @@ def multi_array(ary, counter = 0, original_array)
   multi_array(ary, counter, original_array)
 end
 
+# combine breakup and sorting processes
 def merge_sort(ary)
   ary = break_array(ary, results = Array.new, final = [])
   multi_array(ary, counter = 0, original_array = ary)
