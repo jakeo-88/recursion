@@ -1,30 +1,34 @@
 # break the array into individual segments
-def break_array(ary, results = Array.new, final = [])
-  if ary.length == 1
-    final << ary
-    
-  else  
-    results.push(ary[0, (ary.length/2) ] )
-    results.push(ary[-(ary.length/2), (ary.length/2) ] )
-
-    ary = results
-
-    ary.each do |element|
-      if element.class == Array then
-        break_array(element, results = Array.new, final)
-      end
-    end
-    final
-  end
+def break_array(ary, results = Array.new, final = [], org_ary = ary)
+  ary1 = ary[0, ary.length/2]
+  ary2 = ary[-(ary.length/2), (ary.length/2)] 
+  results << ary1
+  results << ary2
+  repeat_break_array(results, broke_array = Array.new, org_ary, n = 0)
 end
-# sort the array
-def rebuild_array(ary, n = 0, results = Array.new)
-  return results if n >= (ary.length - 1)
+def repeat_break_array(ary, broke_array = Array.new, ref, n)
+  return broke_array if broke_array.length >= ref.length
   
-  new_array = ary[n] + ary[n + 1] 
-  results.push(new_array)
-  rebuild_array(ary, (n + 2), results)    
+  if (ary[n].empty? == true) 
+      n += 1
+  end
+  
+  if  (ary[n].length % 3) == 0
+      broke_array << [ary[n][0]]
+      ary[n].delete_at(0)
+  elsif (ary[n].length % 2) == 0 
+      broke_array << [ary[n][0]]
+      broke_array << [ary[n][1]]
+      ary[n].delete_at(0)
+      ary[n].delete_at(0)
+  else #for % 1 == 0 case
+      broke_array << [ary[n][0]]
+      ary[n].delete_at(0)
+  end
+  
+  repeat_break_array(ary, broke_array, ref, n)
 end
+
 
 # sort in pairs of 2 elements until the array is sorted
 def sort_element(left_array, right_array, results = Array.new)
