@@ -30,13 +30,12 @@ end
 def sort_element(left_array, right_array, results = Array.new)
   if left_array == []
     return results << right_array[0] if right_array.length == 1
-      
-      
+
       left_value = right_array[0]
       right_value = right_array[1]
       
       if left_value < right_value 
-          results << right_value
+          results << left_value
           right_array.delete_at(0)
   
       else
@@ -44,6 +43,7 @@ def sort_element(left_array, right_array, results = Array.new)
           right_array.delete_at(1)
       end
       
+      results
   elsif right_array == []
       return results << left_array[0] if left_array.length == 1
       
@@ -59,8 +59,7 @@ def sort_element(left_array, right_array, results = Array.new)
           left_array.delete_at(1)
       end
       
-      results
-      
+      results      
   else
      
       left_value = left_array[0]
@@ -91,3 +90,15 @@ def compile_array(ary, n = 0, final_array = Array.new)
    compile_array(ary, n + 2, final_array)
 end
 
+def multi_array(ary, counter = 0, original_array)
+  return ary if counter >= Math.log(original_array.length, 2).to_f.ceil
+  ary = compile_array(ary, n = 0, final_array = Array.new)
+  counter += 1
+  
+  multi_array(ary, counter, original_array)
+end
+
+def merge_sort(ary)
+  ary = break_array(ary, results = Array.new, final = [])
+  multi_array(ary, counter = 0, original_array = ary)
+end
